@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import gotService from'./services';
 
 class App extends Component {
   render() {
+    const serv = new gotService();
+    serv.getBooks(1).then(res=>console.log(res));
     return (
       <div className="App">
         <header className="App-header">
