@@ -41,33 +41,26 @@ export default class gotService {
         return  this._transformHouse(house); 
      }
 
-     _transformCharacter(char) {
-         return {
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture
-         }
+     _transformCharacter(char) {         
+         return this.сheckEmptyData(char);
       }   
 
       _transformHouse(house) {
-         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            titles: house.title,
-            overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons
-         }      
+         return this.сheckEmptyData(house);
       }
 
       _transformBook(book) {
-         return {
-            name: book.name,
-            numberOfPages: book.numberOfPages,
-            publiser: book.publiser,
-            released: book.released
-         }      
+         return this.сheckEmptyData(book)  
       }
+
+      сheckEmptyData=(obj)=>{
+         const newObj = {...obj};
+            for (let prop in newObj) {            
+               if (!newObj[prop]) {
+                  newObj[prop] = 'not set value';
+               }
+            }        
+         return newObj;
+      };
+
 }

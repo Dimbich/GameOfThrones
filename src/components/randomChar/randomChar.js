@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Spinner from '../spinner';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services'
@@ -23,19 +24,25 @@ export default class RandomChar extends Component {
     }
     gotService  = new gotService();
     state = {
-        char:{}
+        char:{},
+        loading: true
+    }
+
+    onCharLoaded = (char) => {
+        this.setState({
+            char,
+            loading: false
+        });
     }
 
     updateChar() {
         const id = Math.floor(Math.random()*131+12);
         this.gotService.getCharacter(id)
-            .then((char)=>{
-                this.setState({char})
-            })
+            .then(this.onCharLoaded)
     }
     render() {
-        const {char:{name, gender, born, died, culture}} =this.state;
-        return (
+        const {loading, char:{name, gender, born, died, culture}} =this.state;
+        return loading ? <Spinner/> : (
             <RandomBlock className="rounded">
                 <h4>{name}</h4>
                 <ListGroup className="list-group-flush">
