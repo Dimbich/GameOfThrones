@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
+
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services'
@@ -25,30 +27,46 @@ export default class RandomChar extends Component {
     gotService  = new gotService();
     state = {
         char:{},
-        loading: true
+        loading: true,
+        visable: true
     }
 
     onCharLoaded = (char) => {
         this.setState({
             char,
+            loading: false,
+            error: false
+        });
+    }
+
+    onError = (err) => {
+        this.setState({
+            error: true,
             loading: false
         });
     }
 
+    toggleRandomForm = ()=>{
+        this.setState({visable: !this.state.visable})
+    }
+
     updateChar() {
-        const id = Math.floor(Math.random()*131+12);
+        const id = 123214343243;//Math.floor(Math.random()*131+12);
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
+            .catch(this.onError)
     }
     render() {
-        const {loading, char} =this.state;
-        const spinner = loading ? <Spinner/> : null;
-        const content = !loading ? <View char={char}/> : null;
-        {/*return loading ? <Spinner/> : <View char={char}/>;*/}
+        const {loading, char, error} =this.state;
+        const errorMessage = error ? <ErrorMessage/> : null;
+        const spinner =loading ? <Spinner/> : null;
+        const content = !(loading || error) ? <View char={char}/> : null;
+         {/*return loading ? <Spinner/> : <View char={char}/>;*/}
         return (
             <RandomBlock className="rounded">
-            {spinner}
-            {content}
+                {errorMessage}
+                {spinner}
+                {content}
             </RandomBlock>
         )
 
