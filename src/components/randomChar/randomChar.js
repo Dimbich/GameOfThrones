@@ -23,29 +23,18 @@ export default class RandomChar extends Component {
     }
     gotService  = new gotService();
     state = {
-        name: null,
-        gender: null,
-        born: null,
-        died: null,
-        culture: null
+        char:{}
     }
 
     updateChar() {
-        const id = 121;
+        const id = Math.floor(Math.random()*131+12);
         this.gotService.getCharacter(id)
             .then((char)=>{
-                console.log(char);
-                this.setState({
-                    name: char.name,
-                    gender: char.gender,
-                    born: char.born,
-                    died: char.died,
-                    culture: char.culture
-                })
+                this.setState({char})
             })
     }
     render() {
-        const {name, gender, born, died, culture} =this.state;
+        const {char:{name, gender, born, died, culture}} =this.state;
         return (
             <RandomBlock className="rounded">
                 <h4>{name}</h4>
