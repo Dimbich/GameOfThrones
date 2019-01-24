@@ -4,11 +4,18 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
 import CharDetails from '../charDetails';
+import ErrorMessage from '../errorMessage';
 
 class App extends Component {
     state = {
         show: true,
-        selectedChar: null
+        selectedChar: null,
+        error: null
+
+    }
+
+    componentDidCatch() {
+        this.setState({error: true});
     }
 
     toggleButton = () => {
@@ -25,6 +32,9 @@ class App extends Component {
         const {show} = this.state;
         const btnLabel = show ? 'Hide' : 'Show random character';
         const randChar = show ? <RandomChar /> : null;
+        if (this.state.error) {
+            return <ErrorMessage />
+        }
         return (        
             <> 
                 <Container>
