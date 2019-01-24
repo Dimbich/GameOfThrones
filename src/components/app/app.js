@@ -7,7 +7,8 @@ import CharDetails from '../charDetails';
 
 class App extends Component {
     state = {
-        show: true
+        show: true,
+        selectedChar: null
     }
 
     toggleButton = () => {
@@ -15,6 +16,11 @@ class App extends Component {
             show: !show
         }));
     }
+
+    onCharSelected = (id) => {
+        this.setState({selectedChar: id})
+    }
+
     render() {
         const {show} = this.state;
         const btnLabel = show ? 'Hide' : 'Show random character';
@@ -33,10 +39,10 @@ class App extends Component {
                     </Row>
                     <Row>
                         <Col md='6'>
-                            <ItemList />
+                            <ItemList onCharSelected = {this.onCharSelected}/>
                         </Col>
                         <Col md='6'>
-                            <CharDetails />
+                            <CharDetails charId={this.state.selectedChar}/>
                         </Col>
                     </Row>
                 </Container>

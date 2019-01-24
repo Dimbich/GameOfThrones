@@ -25,10 +25,11 @@ export default class ItemList extends Component {
     }
 
     renderItem(arr) {
-        console.log(arr);
         return arr.map((item, i) => {
             return (
-                <ListGroupItem key={i}>
+                <ListGroupItem 
+                    key = {i}
+                    onClick = {()=>{this.props.onCharSelected(41+i)}}> 
                     {item.name}
                 </ListGroupItem>
             )
@@ -37,16 +38,15 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const {charList} =this.state;
-        console.log(charList)
+        const {charList} = this.state;
         if (!charList) {
-            return <Spinner/>
+            return <Spinner />
         }
-       const items = this.renderItem(charList);
-        return !charList ? <Spinner/> : (
+        const items = this.renderItem(charList);
+        return (
             <ItemLists>
                 {items} 
             </ItemLists>
-        );
+        )        
     }
 }

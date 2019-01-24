@@ -64,7 +64,6 @@ export default class RandomChar extends Component {
             .catch(this.onError)
     }
     render() {
-        console.log('render');
         const {loading, char, error} =this.state;
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner =loading ? <Spinner/> : null;
