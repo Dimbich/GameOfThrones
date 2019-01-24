@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
 import ErrorMessage from '../errorMessage';
+import CharacterPage from '../characterPage/';
 
 class App extends Component {
     state = {
         show: true,
-        selectedChar: null,
         error: null
 
     }
@@ -22,10 +20,6 @@ class App extends Component {
         this.setState(({show})=>({
             show: !show
         }));
-    }
-
-    onCharSelected = (id) => {
-        this.setState({selectedChar: id})
     }
 
     render() {
@@ -47,14 +41,7 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected = {this.onCharSelected}/>
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails charId={this.state.selectedChar}/>
-                        </Col>
-                    </Row>
+                    <CharacterPage />
                 </Container>
             </>
         )
