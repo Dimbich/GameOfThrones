@@ -20,16 +20,22 @@ const RandomBlock = styled.div`
 `
 
 export default class RandomChar extends Component {
-    constructor(){
-        super()
-        this.updateChar();
-    }
+
     gotService  = new gotService();
     state = {
         char:{},
         loading: true,
         visable: true
     }
+
+    componentDidMount() {
+        this.updateChar();
+        this.timer = setInterval(this.updateChar, 1500);
+    }
+    componentWillUnmount
+    componentWillUnmount() {        
+        clearTimeout(this.timer);
+    };
 
     onCharLoaded = (char) => {
         this.setState({
@@ -50,13 +56,15 @@ export default class RandomChar extends Component {
         this.setState({visable: !this.state.visable})
     }
 
-    updateChar() {
-        const id = 123214343243;//Math.floor(Math.random()*131+12);
+    updateChar = () => {
+        //console.log('update');
+        const id = Math.floor(Math.random()*131+12);
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
     }
     render() {
+        console.log('render');
         const {loading, char, error} =this.state;
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner =loading ? <Spinner/> : null;
