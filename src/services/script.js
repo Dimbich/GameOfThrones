@@ -41,25 +41,27 @@ export default class gotService {
         return  this._transformHouse(house); 
      }
 
-     _transformCharacter(char) {         
+     _transformCharacter = (char)=>{
          return this.сheckEmptyData(char);
       }   
 
-      _transformHouse(house) {
+      _transformHouse = (house)=> {
          return this.сheckEmptyData(house);
       }
 
-      _transformBook(book) {
+      _transformBook = (book)=> {
          return this.сheckEmptyData(book)  
       }
 
-      сheckEmptyData=(obj)=>{
+      сheckEmptyData = (obj)=>{
+
          const newObj = {...obj};
             for (let prop in newObj) {            
                if (!newObj[prop]) {
                   newObj[prop] = 'not set value';
                }
-            }        
+            }
+                  
          return newObj;
       };
 
