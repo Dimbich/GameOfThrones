@@ -45,11 +45,17 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <CharacterPage getData = {this.gotService.getAllCharacters}/>
-                    <CharacterPage getData = {this.gotService.getAllBooks}/>
-                    <CharacterPage getData = {this.gotService.getAllHouses}/>
+                    <CharacterPage 
+                        getData = {this.gotService.getAllCharacters}
+                        renderItem = {({name, gender}) => (<><span>{name} ({gender})</span><button>Click me</button></>)}/>
+                    <CharacterPage 
+                        getData = {this.gotService.getAllBooks}
+                        renderItem = {({name,authors}) => `${name} (${authors})`}/>/>
+                    <CharacterPage 
+                        getData = {this.gotService.getAllHouses}
+                        renderItem = {({name,founder}) => `${name} (${founder})`}/>/>
                 </Container>
-            </>
+           </>
         )
     }
 }
