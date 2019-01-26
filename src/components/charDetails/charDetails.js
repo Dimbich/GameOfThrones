@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import gotService from '../../services';
 import Spinner from '../spinner';
 import ViewChar from '../viewChar';
+import ErrorMessage from '../errorMessage';
 
 const CharDetail = styled.div`
     background-color: #fff;
@@ -30,7 +31,7 @@ export default class CharDetails extends Component {
         errMessage: ''
     }
 
-    componentDidMount() {
+    componentDidMount() {       
         this.updateChar();
     };
 
@@ -56,7 +57,7 @@ export default class CharDetails extends Component {
     }
 
     updateChar() {
-        const {charId} = this.props;
+        const {charId} = this.props;        
         if (!charId) {
             return;
         }
@@ -72,13 +73,17 @@ export default class CharDetails extends Component {
             textAlign: 'center',
             fontSize: '26px'        
         }
-        if (!this.state.char) {
+        if (!this.props.charId) {
             return <span style = {styleErr} className="select-error">Please select charcter</span>
         }
-        // const {char} = this.state;
-        return (
+        const errorMessage = error ? <ErrorMessage errorMessage={errMessage}/> : null;
+        const spinner =loading ? <Spinner/> : null;
+        const content = !(loading || error) ? <ViewChar char={char}/> : null;
+        return (            
             <CharDetail className="rounded">
-                <ViewChar char ={char}/>
+                {errorMessage}
+                {spinner}
+                {content}
             </CharDetail>
         );
     }
