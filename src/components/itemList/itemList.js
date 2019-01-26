@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
-import gotService from '../../services';
 import ErrorMessage from '../errorMessage';
 import Spinner from '../spinner';
 
@@ -14,26 +13,26 @@ const ItemLists = styled.div`
 `
 
 export default class ItemList extends Component {
-    gotService = new gotService();
 
     state = {
-        charList: null,
+        itemList: null,
         error: false,
         loading: true,
         errMessage: null
     }
 
-    componentDidMount(){       
-        this.gotService.getAllCharacters()
+    componentDidMount(){
+        const {getData} = this.props;      
+        getData()
             .then(this.onCharLoaded)
             .catch(this.onError)
     }
     
 
-    onCharLoaded = (charList) => {
+    onCharLoaded = (itemList) => {
                 
         this.setState({
-                charList,
+                itemList,
                 error: false,
                 loading: false   
             })        
@@ -65,10 +64,10 @@ export default class ItemList extends Component {
 
     render() {
        
-    const {charList, loading, error, errMessage} = this.state;
+    const {itemList, loading, error, errMessage} = this.state;
         const errorMessage = error ? <ErrorMessage errorMessage={errMessage}/> : null;
         const spinner =loading ? <Spinner/> : null;
-        const content = !(loading || error) ? this.renderItem(charList) : null;             
+        const content = !(loading || error) ? this.renderItem(itemList) : null;             
         return (
             <ItemLists className="rounded">
                 {errorMessage}

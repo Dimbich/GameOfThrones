@@ -4,8 +4,12 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
 import CharacterPage from '../characterPage/';
+import gotService from '../../services';
 
 class App extends Component {
+
+    gotService = new gotService();
+
     state = {
         show: true,
         error: null
@@ -41,7 +45,9 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <CharacterPage />
+                    <CharacterPage getData = {this.gotService.getAllCharacters}/>
+                    <CharacterPage getData = {this.gotService.getAllBooks}/>
+                    <CharacterPage getData = {this.gotService.getAllHouses}/>
                 </Container>
             </>
         )

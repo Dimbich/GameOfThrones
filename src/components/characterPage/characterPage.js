@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import {Col, Row, Container, Button} from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import ItemList from '../itemList';
 import CharDetails from '../charDetails';
 import ErrorMessage from '../errorMessage/';
+//import gotService from '../../services';
 
 import './characterPage.css';
 
 class characterPage extends Component {
+
+    //gotService = new gotService();
+
     state = {
         selectedChar:null,
         error: false
@@ -22,13 +26,19 @@ class characterPage extends Component {
     }
 
     render() {
+        const {getData} = this.props;
+
         if (this.state.error) {
             return <ErrorMessage />
         }
-        return(
+
+        return(           
             <Row>
                 <Col md='6'>
-                    <ItemList onCharSelected = {this.onCharSelected}/>
+                    <ItemList 
+                        onCharSelected = {this.onCharSelected}
+                        getData = {getData}
+                    />
                 </Col>
                 <Col md='6'>
                     <CharDetails charId={this.state.selectedChar}/>
