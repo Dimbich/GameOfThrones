@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
+import ViewChar from '../viewChar';
 
-import { ListGroup, ListGroupItem } from 'reactstrap';
+// import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services'
 
@@ -25,7 +26,8 @@ export default class RandomChar extends Component {
     state = {
         char:{},
         loading: true,
-        visable: true
+        error: false,
+        errMessage: ''
     }
 
     componentDidMount() {
@@ -45,10 +47,11 @@ export default class RandomChar extends Component {
         });
     }
 
-    onError = (err) => {
+    onError = ({message}) => {
         this.setState({
             error: true,
-            loading: false
+            loading: false,
+            errMessage: message
         });
     }
 
@@ -64,10 +67,10 @@ export default class RandomChar extends Component {
             .catch(this.onError)
     }
     render() {
-        const {loading, char, error} =this.state;
-        const errorMessage = error ? <ErrorMessage/> : null;
+        const {loading, char, error,errMessage} =this.state;
+        const errorMessage = error ? <ErrorMessage errorMessage={errMessage}/> : null;
         const spinner =loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View char={char}/> : null;
+        const content = !(loading || error) ? <ViewChar char={char}/> : null;
          {/*return loading ? <Spinner/> : <View char={char}/>;*/}
         return (
             <RandomBlock className="rounded">
@@ -82,29 +85,30 @@ export default class RandomChar extends Component {
 
 }
 
-const View = ({char}) => {
-    const {name, gender, born, died, culture} = char;
-    return (
-        <>
-            <h4>{name}</h4>
-            <ListGroup className="list-group-flush">
-                <ListGroupItem className="d-flex justify-content-between">
-                    <span className="term">Gender </span>
-                    <span>{gender}</span>
-                </ListGroupItem>
-                <ListGroupItem className="d-flex justify-content-between">
-                    <span className="term">Born </span>
-                    <span>{born}</span>
-                </ListGroupItem>
-                <ListGroupItem className="d-flex justify-content-between">
-                    <span className="term">Died </span>
-                    <span>{died}</span>
-                </ListGroupItem>
-                <ListGroupItem className="d-flex justify-content-between">
-                    <span className="term">Culture </span>
-                    <span>{culture}</span>
-                </ListGroupItem>
-            </ListGroup>
-        </>
-    )
-}
+// const View = ({char}) => {
+//     const {name, gender, born, died, culture} = char;
+//    // console.log(url);
+//     return (
+//         <>
+//             <h4>{name}</h4>
+//             <ListGroup className="list-group-flush">
+//                 <ListGroupItem className="d-flex justify-content-between">
+//                     <span className="term">Gender </span>
+//                     <span>{gender}</span>
+//                 </ListGroupItem>
+//                 <ListGroupItem className="d-flex justify-content-between">
+//                     <span className="term">Born </span>
+//                     <span>{born}</span>
+//                 </ListGroupItem>
+//                 <ListGroupItem className="d-flex justify-content-between">
+//                     <span className="term">Died </span>
+//                     <span>{died}</span>
+//                 </ListGroupItem>
+//                 <ListGroupItem className="d-flex justify-content-between">
+//                     <span className="term">Culture </span>
+//                     <span>{culture}</span>
+//                 </ListGroupItem>
+//             </ListGroup>
+//         </>
+//     )
+// }

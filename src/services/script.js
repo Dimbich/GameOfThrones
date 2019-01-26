@@ -18,7 +18,7 @@ export default class gotService {
     }
 
    async getCharacter(id){
-      const character = await this.getResourse(`characters/${id}`); 
+      const character = await this.getResourse(`characters1/${id}`); 
       return this._transformCharacter(character);
     }
 
@@ -56,12 +56,17 @@ export default class gotService {
       сheckEmptyData = (obj)=>{
 
          const newObj = {...obj};
-            for (let prop in newObj) {            
+            for (let prop in newObj) {
+               if (prop === 'url') {
+                  [newObj.id] = newObj[prop].match(/\d+$/);
+               }
+               
                if (!newObj[prop]) {
                   newObj[prop] = 'not set value';
                }
+              
             }
-                  
+              
          return newObj;
       };
 

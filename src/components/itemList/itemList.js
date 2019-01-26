@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services';
 import Spinner from '../spinner';
@@ -25,12 +25,13 @@ export default class ItemList extends Component {
     }
 
     renderItem(arr) {
-        return arr.map((item, i) => {
+        return arr.map((item) => {
+            const {name, id} = item
             return (
                 <ListGroupItem 
-                    key = {i}
-                    onClick = {()=>{this.props.onCharSelected(41+i)}}> 
-                    {item.name}
+                    key = {id}
+                    onClick = {()=>{this.props.onCharSelected(id)}}> 
+                    {name}
                 </ListGroupItem>
             )
 
