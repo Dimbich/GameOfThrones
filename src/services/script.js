@@ -65,6 +65,10 @@ export default class gotService {
                if (!newObj[prop]) {
                   newObj[prop] = 'not set value';
                }
+
+               // if(Array.isArray(newObj[prop]) ) {
+               //   console.log(newObj[prop].filter(item=>item));
+               // }
               
             }
               

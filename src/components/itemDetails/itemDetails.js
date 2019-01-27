@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import gotService from '../../services';
 import Spinner from '../spinner';
-import ViewChar from '../viewChar';
+import ViewItem from '../viewItem';
 import ErrorMessage from '../errorMessage';
 
-const CharDetail = styled.div`
+const ItemDetail = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
@@ -21,29 +20,28 @@ const CharDetail = styled.div`
 `;
 
 
-export default class CharDetails extends Component {
-    gotService = new gotService();
-
+export default class ItemDetails extends Component {
     state = {
-        char: null,
+        item: null,
         loading: true,
         error: false,
         errMessage: ''
     }
 
     componentDidMount() {       
-        this.updateChar();
+        this.updateItem();
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.charId !== prevProps.charId) {
-            this.updateChar();
+        if (this.props.itemId !== prevProps.itemId) {
+            this.updateItem();
         }
     }
 
-    onLoader = (char) =>{
+    onLoader = (item) =>{
+        //console.log(item);
         this.setState({
-            char,
+            item,
             loading:false,
         });
     }
@@ -56,35 +54,39 @@ export default class CharDetails extends Component {
         });
     }
 
-    updateChar() {
-        const {charId} = this.props;        
-        if (!charId) {
+    updateItem() {
+        const {itemId, getItem} = this.props;        
+        if (!itemId) {
             return;
         }
-        this.gotService.getCharacter(charId)
+       getItem(itemId)
             .then(this.onLoader)            
             .catch(this.onError)
        // this.foo.bar = 0        
     }
     render() {
-        const {loading, char, error,errMessage} =this.state;
+        const {loading, item, error,errMessage} =this.state;
         let styleErr= {            
             color: '#fff',
             textAlign: 'center',
             fontSize: '26px'        
         }
-        if (!this.props.charId) {
+        if (!this.props.itemId) {
             return <span style = {styleErr} className="select-error">Please select charcter</span>
         }
         const errorMessage = error ? <ErrorMessage errorMessage={errMessage}/> : null;
         const spinner =loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <ViewChar char={char}/> : null;
+        const content = !(loading || error) ? 
+                                            <ViewItem item={item}>
+                                                {this.props.children}                                           
+                                            </ViewItem>
+                                             : null;
         return (            
-            <CharDetail className="rounded">
+            <ItemDetail className="rounded">
                 {errorMessage}
                 {spinner}
                 {content}
-            </CharDetail>
+            </ItemDetail>
         );
     }
 }

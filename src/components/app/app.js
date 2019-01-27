@@ -3,12 +3,9 @@ import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
-import CharacterPage from '../characterPage/';
-import gotService from '../../services';
+import {CharacterPage, BooksPage, HousesPage} from '../pages/';
 
 class App extends Component {
-
-    gotService = new gotService();
 
     state = {
         show: true,
@@ -45,15 +42,9 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <CharacterPage 
-                        getData = {this.gotService.getAllCharacters}
-                        renderItem = {({name, gender}) => (<><span>{name} ({gender})</span><button>Click me</button></>)}/>
-                    <CharacterPage 
-                        getData = {this.gotService.getAllBooks}
-                        renderItem = {({name,authors}) => `${name} (${authors})`}/>/>
-                    <CharacterPage 
-                        getData = {this.gotService.getAllHouses}
-                        renderItem = {({name,founder}) => `${name} (${founder})`}/>/>
+                    <CharacterPage/>
+                    <BooksPage/>
+                    <HousesPage/>
                 </Container>
            </>
         )

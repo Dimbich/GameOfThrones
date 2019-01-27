@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import ItemList from '../itemList';
 import ItemDetails from '../itemDetails';
+import {Field} from '../viewItem/';
 import ErrorMessage from '../errorMessage/';
 import RowBlock from '../rowBlock';
 import gotService from '../../services';
 
-import './characterPage.css';
-
-
-class characterPage extends Component {
+class booksPage extends Component {
 
     gotService = new gotService();
 
@@ -34,13 +32,19 @@ class characterPage extends Component {
         const itemList = 
             (<ItemList 
             onItemSelected = {this.onItemSelected}
-            getData = {this.gotService.getAllCharacters}
-            renderItem = {({name, gender}) => (<><span>{name} ({gender})</span><button>Click me</button></>)}/>);
+            getData = {this.gotService.getAllHouses}
+            renderItem = {({name}) => name}
+            />);
 
         const itemDetails   = (
             <ItemDetails 
                 itemId={this.state.selectedItem}
-                getItem = {this.gotService.getCharacter}/>               
+                getItem = {this.gotService.getHouses}>
+				<Field field='region' label='Region'/>
+				<Field field='words' label='Words'/>
+				<Field field='founded' label='Founded'/>
+				<Field field='ancestralWeapons' label='Ancestral Weapons'/>
+            </ItemDetails>    
         );
         
 
@@ -50,4 +54,4 @@ class characterPage extends Component {
     }
 }
 
-export default characterPage;
+export default booksPage;

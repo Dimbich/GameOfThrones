@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
-import ViewChar from '../viewChar';
+import ViewItem,{Field} from '../viewItem';
 
 // import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ export default class RandomChar extends Component {
 
     gotService  = new gotService();
     state = {
-        char:{},
+        item:{},
         loading: true,
         error: false,
         errMessage: ''
@@ -39,9 +39,9 @@ export default class RandomChar extends Component {
         clearTimeout(this.timer);
     };
 
-    onCharLoaded = (char) => {
+    onCharLoaded = (item) => {
         this.setState({
-            char,
+            item,
             loading: false,
             error: false
         });
@@ -67,10 +67,16 @@ export default class RandomChar extends Component {
             .catch(this.onError)
     }
     render() {
-        const {loading, char, error,errMessage} =this.state;
+        const {loading, item, error,errMessage} =this.state;
         const errorMessage = error ? <ErrorMessage errorMessage={errMessage}/> : null;
         const spinner =loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <ViewChar char={char}/> : null;
+        const content = !(loading || error) ? <ViewItem item={item}>                                              
+                                                <Field field ='gender' label='Gender'/>
+                                                <Field field ='born' label='Born'/>
+                                                <Field field ='died' label='Died'/>
+                                                <Field field ='culture' label='Culture'/>           
+                                              </ViewItem> 
+                                              : null;
          {/*return loading ? <Spinner/> : <View char={char}/>;*/}
         return (
             <RandomBlock className="rounded">

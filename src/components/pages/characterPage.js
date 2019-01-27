@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import ItemList from '../itemList';
 import ItemDetails from '../itemDetails';
+import {Field} from '../viewItem/';
 import ErrorMessage from '../errorMessage/';
 import RowBlock from '../rowBlock';
 import gotService from '../../services';
-
-import './characterPage.css';
-
 
 class characterPage extends Component {
 
@@ -35,12 +33,18 @@ class characterPage extends Component {
             (<ItemList 
             onItemSelected = {this.onItemSelected}
             getData = {this.gotService.getAllCharacters}
-            renderItem = {({name, gender}) => (<><span>{name} ({gender})</span><button>Click me</button></>)}/>);
+            renderItem = {({name}) => name}/>);
 
         const itemDetails   = (
             <ItemDetails 
                 itemId={this.state.selectedItem}
-                getItem = {this.gotService.getCharacter}/>               
+                getItem = {this.gotService.getCharacter}>
+                <Field field ='gender' label='Gender'/>
+                <Field field ='born' label='Born'/>
+                <Field field ='died' label='Died'/>
+                <Field field ='culture' label='Culture'/>
+            </ItemDetails>    
+
         );
         
 
