@@ -3,7 +3,11 @@ import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
-import {CharacterPage, BooksPage, HousesPage} from '../pages/';
+import {CharacterPage, BooksPage, HousesPage, BooksItem} from '../pages/';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+
+
+import './app.css';
 
 class App extends Component {
 
@@ -30,8 +34,9 @@ class App extends Component {
         if (this.state.error) {
             return <ErrorMessage />
         }
-        return (        
-            <> 
+        return (
+            <Router>        
+            <div className="app"> 
                 <Container>
                     <Header />
                 </Container>
@@ -42,11 +47,18 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <CharacterPage/>
-                    <BooksPage/>
-                    <HousesPage/>
+                    <Route path='/' exact component={()=><h1>Welcome to GoT DB</h1>}/>
+                    <Route path='/characters' component={CharacterPage}/>                    
+                    <Route path='/houses' component={HousesPage}/>
+                    <Route path='/books' exact component={BooksPage}/>
+                    <Route path='/books:id' render={()=><BooksItem/>} />
+
+                    <BooksItem/>
                 </Container>
-           </>
+
+           </div>
+           </Router>
+           
         )
     }
 }
