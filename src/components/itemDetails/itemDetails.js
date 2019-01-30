@@ -65,7 +65,6 @@ export default class ItemDetails extends Component {
        // this.foo.bar = 0        
     }
     render() {
-        console.log('fg');
         const {loading, item, error,errMessage} =this.state;
         let styleErr= {            
             color: '#fff',

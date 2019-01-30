@@ -3,6 +3,7 @@ import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
+import MainPage from '../mainPage';
 import {CharacterPage, BooksPage, HousesPage, BooksItem} from '../pages/';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
@@ -12,7 +13,7 @@ import './app.css';
 class App extends Component {
 
     state = {
-        show: true,
+        show: false,
         error: null
 
     }
@@ -47,13 +48,20 @@ class App extends Component {
                             {randChar}
                         </Col>
                     </Row>
-                    <Route path='/' exact component={()=><h1>Welcome to GoT DB</h1>}/>
+                    <Route path='/' exact component={()=>{
+                        return (
+                          <MainPage/>
+                        )
+                    }}/>
                     <Route path='/characters' component={CharacterPage}/>                    
                     <Route path='/houses' component={HousesPage}/>
-                    <Route path='/books' exact component={BooksPage}/>
-                    <Route path='/books:id' render={()=><BooksItem/>} />
+                    <Route path='/books/' exact component={BooksPage}/>
+                    <Route path='/books/:id' render={
+                        ({match})=>{
+                            const {id} = match.params;
+                        return <BooksItem booksId = {id}/>}
+                    } />
 
-                    <BooksItem/>
                 </Container>
 
            </div>

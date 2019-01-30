@@ -4,17 +4,13 @@ import ItemDetails from '../itemDetails';
 import {Field} from '../viewItem/';
 
 class BooksItem extends Component {
-    state = {
-        selectedItem: 3
-    }
 
     gotService = new gotService();
 
     render() {
-        console.log('ghf');
         return (
-            <ItemDetails 
-                itemId={this.state.selectedItem}
+            <ItemDetails  style = {{backgroundColor: 'tomato'}}
+                itemId={this.props.booksId}
                 getItem = {this.gotService.getBooks}>
                 <Field field ='authors' label='Authors'/>
                 <Field field ='numberOfPages' label='Number of pages'/>
