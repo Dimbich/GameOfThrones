@@ -77,7 +77,6 @@ export default class RandomChar extends Component {
                                                 <Field field ='culture' label='Culture'/>           
                                               </ViewItem> 
                                               : null;
-         {/*return loading ? <Spinner/> : <View char={char}/>;*/}
         return (
             <RandomBlock className="rounded">
                 {errorMessage}
